@@ -1,6 +1,9 @@
 package arraysandslices
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestSum(t *testing.T) {
 	t.Run("collection of 5 numbers", func(t *testing.T) {
@@ -15,4 +18,16 @@ func TestSum(t *testing.T) {
 			t.Logf("expected %d got %d, given %v", expected, got, numbers)
 		}
 	})
+}
+
+func TestSumAll(t *testing.T) {
+	got := SumAll([]int{1, 2}, []int{3, 4})
+	expected := []int{3, 7}
+
+	if !reflect.DeepEqual(got, expected) {
+		t.Errorf("expected %d got %d", expected, got)
+	} else {
+		t.Logf("expected %d got %d", expected, got)
+	}
+
 }
