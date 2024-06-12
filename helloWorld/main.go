@@ -7,12 +7,29 @@ func main() {
 }
 
 func Hello(name, language string) (string, string, error) {
-	if name == "" && language == "" {
-		name = "world"
-		return "Hello, " + name + "! noob", "english", nil
-	} else if name == "anmol" {
-		return "Hello, " + name + "! notnoob", "english", nil
+	if language == "" {
+		language = "english"
 	}
 
-	return "Hello, " + name + "! noob", "english", nil
+	switch language {
+	case "spanish":
+		if name == "" {
+			name = "Mundo"
+		}
+		const spanishPrefix = "¡Hola, "
+		const spanishSuffix = "! novato"
+		return spanishPrefix + name + spanishSuffix, language, nil
+	case "english":
+		if name == "" {
+			name = "world"
+		}
+		const englishPrefix = "Hello, "
+		const englishSuffix = "! noob"
+		if name == "anmol" {
+			return englishPrefix + name + "! notnoob", language, nil
+		}
+		return englishPrefix + name + englishSuffix, language, nil
+	default:
+		return "", "", fmt.Errorf("unsupported language: %v", language)
+	}
 }

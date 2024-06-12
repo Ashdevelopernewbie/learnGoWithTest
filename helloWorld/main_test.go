@@ -5,10 +5,22 @@ import (
 )
 
 func TestHello(t *testing.T) {
-	expectedLang := "english"
+	var expectedLang string
 	t.Run("empty name with empty language", func(t *testing.T) {
 		got, language, err := Hello("", "")
 		expected := "Hello, world! noob"
+		expectedLang = "english"
+
+		checkErrorMessage(t, err)
+		if language != expectedLang {
+			assertCorrectMessage(t, language, expectedLang)
+		}
+		assertCorrectMessage(t, got, expected)
+	})
+	t.Run("empty name with spanish language", func(t *testing.T) {
+		got, language, err := Hello("", "spanish")
+		expected := "¡Hola, Mundo! novato"
+		expectedLang = "spanish"
 
 		checkErrorMessage(t, err)
 		if language != expectedLang {
@@ -19,6 +31,7 @@ func TestHello(t *testing.T) {
 	t.Run("name: world", func(t *testing.T) {
 		got, language, err := Hello("world", "")
 		expected := "Hello, world! noob"
+		expectedLang = "english"
 
 		checkErrorMessage(t, err)
 		if language != expectedLang {
@@ -29,6 +42,7 @@ func TestHello(t *testing.T) {
 	t.Run("name: anmol", func(t *testing.T) {
 		got, language, err := Hello("anmol", "")
 		expected := "Hello, anmol! notnoob"
+		expectedLang = "english"
 
 		checkErrorMessage(t, err)
 		if language != expectedLang {
@@ -36,7 +50,17 @@ func TestHello(t *testing.T) {
 		}
 		assertCorrectMessage(t, got, expected)
 	})
+	t.Run("spanish name with spanish language", func(t *testing.T) {
+		got, language, err := Hello("Manuel", "spanish")
+		expected := "¡Hola, Manuel! novato"
+		expectedLang = "spanish"
 
+		checkErrorMessage(t, err)
+		if language != expectedLang {
+			assertCorrectMessage(t, language, expectedLang)
+		}
+		assertCorrectMessage(t, got, expected)
+	})
 }
 
 func checkErrorMessage(t testing.TB, err error) {
