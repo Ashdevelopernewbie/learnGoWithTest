@@ -19,12 +19,7 @@ func TestHello(t *testing.T) {
 		if err != nil {
 			t.Fatalf("no error expected but found: %v", err)
 		}
-		if got != expected {
-			t.Errorf("\ngot:      %v\nexpected: %v", got, expected)
-		} else {
-			t.Logf("\ngot:      %v\nexpected: %v", got, expected)
-		}
-
+		assertCorrectMessage(t, got, expected)
 	})
 	t.Run("name: anmol", func(t *testing.T) {
 		got, err := Hello("anmol")
@@ -33,10 +28,15 @@ func TestHello(t *testing.T) {
 		if err != nil {
 			t.Fatalf("no error expected but found: %v", err)
 		}
-		if got != expected {
-			t.Errorf("\ngot:      %v\nexpected: %v", got, expected)
-		} else {
-			t.Logf("\ngot:      %v\nexpected: %v", got, expected)
-		}
+		assertCorrectMessage(t, got, expected)
 	})
+}
+
+func assertCorrectMessage(t testing.TB, got, expected string) {
+	t.Helper()
+	if got != expected {
+		t.Errorf("\ngot:      %v\nexpected: %v", got, expected)
+	} else {
+		t.Logf("\ngot:      %v\nexpected: %v", got, expected)
+	}
 }
