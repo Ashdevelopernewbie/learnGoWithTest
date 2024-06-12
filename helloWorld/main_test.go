@@ -1,35 +1,48 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestHello(t *testing.T) {
-	t.Run("empty name", func(t *testing.T) {
-		_, err := Hello("")
-		expectedErr := "name cannot be empty"
-		if err == nil || err.Error() != expectedErr {
-			t.Fatalf("expected error, got %v", expectedErr)
-		} else {
-			t.Logf("\ngot:      %v\nexpected: %v", err, expectedErr)
-		}
-	})
-	t.Run("name: world", func(t *testing.T) {
-		got, err := Hello("world")
+	expectedLang := "english"
+	t.Run("empty name with empty language", func(t *testing.T) {
+		got, language, err := Hello("", "")
 		expected := "Hello, world! noob"
 
-		if err != nil {
-			t.Fatalf("no error expected but found: %v", err)
+		checkErrorMessage(t, err)
+		if language != expectedLang {
+			assertCorrectMessage(t, language, expectedLang)
+		}
+		assertCorrectMessage(t, got, expected)
+	})
+	t.Run("name: world", func(t *testing.T) {
+		got, language, err := Hello("world", "")
+		expected := "Hello, world! noob"
+
+		checkErrorMessage(t, err)
+		if language != expectedLang {
+			assertCorrectMessage(t, language, expectedLang)
 		}
 		assertCorrectMessage(t, got, expected)
 	})
 	t.Run("name: anmol", func(t *testing.T) {
-		got, err := Hello("anmol")
+		got, language, err := Hello("anmol", "")
 		expected := "Hello, anmol! notnoob"
 
-		if err != nil {
-			t.Fatalf("no error expected but found: %v", err)
+		checkErrorMessage(t, err)
+		if language != expectedLang {
+			assertCorrectMessage(t, language, expectedLang)
 		}
 		assertCorrectMessage(t, got, expected)
 	})
+
+}
+
+func checkErrorMessage(t testing.TB, err error) {
+	if err != nil {
+		t.Fatalf("no error expected but found: %v", err)
+	}
 }
 
 func assertCorrectMessage(t testing.TB, got, expected string) {
