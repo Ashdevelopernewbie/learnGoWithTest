@@ -1,6 +1,6 @@
 package arraysandslices
 
-func Sum(num [7]int) int {
+func Sum(num []int) int {
 	var total int
 	for _, digits := range num {
 		total += digits
